@@ -1,0 +1,91 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+apply from: 'dependencies.gradle'
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        applicationId "com.kavis.androidtask"
+        minSdk 21
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation deps.general.appcompat
+    implementation deps.general.coreKtx
+    implementation deps.general.fragmentKtx
+    implementation deps.general.constraintlayout
+    implementation deps.general.viewmodelKtx
+
+    //Retrofit
+    implementation deps.retrofit.retrofit2
+    implementation deps.retrofit.retrofit2Gson
+
+    //Gson
+    implementation deps.gson.gson
+
+    //Lifecycle
+    implementation deps.lifecycle.viewmodelKtx
+    implementation deps.lifecycle.liveDataKtx
+    implementation deps.lifecycle.java8
+    implementation deps.lifecycle.lifecycleExt
+
+    //Kotlin Coroutines
+    implementation deps.coroutines.core
+    implementation deps.coroutines.android
+
+    //Hilt
+    implementation deps.hilt.hilt
+    implementation deps.hilt.hiltViewmodel
+    kapt deps.hilt.hiltAndroidCompiler
+    kapt deps.hilt.hiltCompiler
+
+    //Room
+    implementation deps.room.roomRuntime
+    implementation deps.room.roomKtx
+    kapt deps.room.roomProcessor
+
+
+    //Navigation
+    implementation deps.navigation.fragmentKtx
+    implementation deps.navigation.uiKtx
+
+    //Glide
+    implementation  deps.glide.glide
+    kapt  deps.glide.glideProcessor
+
+    testImplementation deps.test.junit
+    androidTestImplementation deps.test.extJunit
+    androidTestImplementation deps.test.espresso
+}
