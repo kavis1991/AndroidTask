@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.kavis.androidtask.data.models.User
 
-@Database(entities = [User::class], version = 1, exportSchema = false)
+@Database(entities = [User::class], version = 5, exportSchema = false)
 abstract class UserDataBase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
@@ -24,6 +24,7 @@ abstract class UserDataBase : RoomDatabase() {
 
         private fun buildDatabase(appContext: Context) =
             Room.databaseBuilder(appContext, UserDataBase::class.java, "users")
+                .fallbackToDestructiveMigration()
                 .build()
     }
 

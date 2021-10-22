@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 interface UserService {
 
-    @GET("/data/v1/user")
-    suspend fun getUserList(@Query("limit") limit: Int): Response<UsersList>
+    @GET("/data/v1//user")
+    suspend fun getUserList(@Query("page") page: Int): Response<UsersList>
 }

@@ -1,6 +1,5 @@
 package com.kavis.androidtask.di
 
-import android.content.Context
 import com.kavis.androidtask.UserApplication
 import com.kavis.androidtask.data.local.UserDao
 import com.kavis.androidtask.data.local.UserDataBase

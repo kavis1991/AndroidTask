@@ -3,6 +3,7 @@ package com.kavis.androidtask.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kavis.androidtask.BASE_URL
+import com.kavis.androidtask.data.remote.HeaderInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,18 +20,27 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
+    @Singleton
     fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
-    fun provideLoggingInterceptor() = HttpLoggingInterceptor().apply {
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
+    @Provides
+    @Singleton
+    fun provideHeaderInterceptor(): HeaderInterceptor = HeaderInterceptor()
+
 
     @Provides
-    fun provideOKHttpClient(loggingInterceptor: HttpLoggingInterceptor) = OkHttpClient().apply {
+    @Singleton
+    fun provideOKHttpClient(loggingInterceptor: HttpLoggingInterceptor, headerInterceptor: HeaderInterceptor): OkHttpClient
+    = OkHttpClient().run {
         OkHttpClient.Builder().run {
             addInterceptor(loggingInterceptor)
+            addInterceptor(headerInterceptor)
             build()
         }
     }
@@ -42,5 +52,4 @@ object NetworkModule {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
-
 }

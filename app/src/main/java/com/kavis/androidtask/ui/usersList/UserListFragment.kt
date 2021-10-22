@@ -1,0 +1,63 @@
+package com.kavis.androidtask.ui.usersList
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.kavis.androidtask.databinding.FragmentUserListBinding
+import com.kavis.androidtask.util.NetworkResult
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
+class UserListFragment: Fragment(), UserListAdapter.UserItemListener {
+    lateinit var binding: FragmentUserListBinding
+    private val viewModel: UserListViewModel by viewModels()
+    private lateinit var adapter: UserListAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentUserListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupObservers()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = UserListAdapter(this)
+        binding.rvUsers.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvUsers.adapter = adapter
+    }
+
+    private fun setupObservers() {
+        viewModel.getUsers().observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                NetworkResult.Status.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
+                    if (!it.data.isNullOrEmpty()) adapter.setItems(ArrayList(it.data))
+                }
+                NetworkResult.Status.ERROR ->
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+
+                NetworkResult.Status.LOADING ->
+                    binding.progressBar.visibility = View.VISIBLE
+            }
+        })
+    }
+
+    override fun onUserClicked (characterId: String) {
+       //todo: go to details
+    }
+
+}
