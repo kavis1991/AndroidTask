@@ -13,7 +13,7 @@ import com.kavis.androidtask.databinding.ItemUserBinding
 class UserListAdapter(private val listener: UserItemListener) : RecyclerView.Adapter<UserViewHolder>() {
 
     interface UserItemListener {
-        fun onUserClicked(characterId: String)
+        fun onUserClicked(userId: String)
     }
 
     private val items = ArrayList<User>()
