@@ -55,6 +55,9 @@ dependencies {
     //Gson
     implementation deps.gson.gson
 
+    //Logger
+    implementation deps.logger.httpsInterceptor
+
     //Lifecycle
     implementation deps.lifecycle.viewmodelKtx
     implementation deps.lifecycle.liveDataKtx

@@ -6,7 +6,7 @@ ext {
             'extJunit'        : '1.1.3',
             'espresso'        : '3.4.0',
             'retrofit'        : '2.9.0',
-            'gson'            : '2.8.0',
+            'gson'            : '2.8.8',
             'coroutines'      : '1.3.7',
             'ktx'             : '2.2.0',
             'coreKtx'         : '1.6.0',
