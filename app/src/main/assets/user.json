@@ -1,0 +1,20 @@
+{
+  "id": "60d0fe4f5311236168a109f3",
+  "title": "mr",
+  "firstName": "Donald",
+  "lastName": "Hopkins",
+  "picture": "https://randomuser.me/api/portraits/med/men/73.jpg",
+  "gender": "male",
+  "email": "donald.hopkins@example.com",
+  "dateOfBirth": "1976-10-02T17:55:48.463Z",
+  "phone": "01587 81675",
+  "location": {
+    "street": "1134, The Drive",
+    "city": "Exeter",
+    "state": "Gloucestershire",
+    "country": "United Kingdom",
+    "timezone": "-8:00"
+  },
+  "registerDate": "2021-06-21T21:02:14.440Z",
+  "updatedDate": "2021-06-21T21:02:14.440Z"
+}

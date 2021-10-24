@@ -11,6 +11,9 @@ import com.kavis.androidtask.data.models.User
 @Dao
 interface UserDao {
 
+    @Query("SELECT * FROM users")
+    fun getUsers() : LiveData<List<User>>
+
     @Query("SELECT * FROM users WHERE id = :id")
     fun getUser(id: String): LiveData<User>
 

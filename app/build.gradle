@@ -48,6 +48,9 @@ dependencies {
     implementation deps.general.constraintlayout
     implementation deps.general.viewmodelKtx
 
+    //okhttp
+    implementation deps.okhttp.okhttp
+
     //Retrofit
     implementation deps.retrofit.retrofit2
     implementation deps.retrofit.retrofit2Gson
@@ -91,7 +94,13 @@ dependencies {
     //paging
     implementation deps.paging.paging
 
-    testImplementation deps.test.junit
+   // testImplementation
     androidTestImplementation deps.test.extJunit
     androidTestImplementation deps.test.espresso
+
+    testImplementation deps.test.junit
+    testImplementation deps.test.mockWebServer
+    testImplementation deps.test.coreTesting
+    testImplementation deps.test.mockitoCore
+    testImplementation deps.test.mockitoInline
 }
