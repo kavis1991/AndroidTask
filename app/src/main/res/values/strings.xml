@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AndroidTask</string>
+    <string name="date_of_birth">Date of birth:</string>
+    <string name="email">Email:</string>
+    <string name="gender">Gender:</string>
+    <string name="phone">Phone:</string>
 </resources>
