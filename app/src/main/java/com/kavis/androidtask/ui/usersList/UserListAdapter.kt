@@ -4,34 +4,43 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.kavis.androidtask.data.models.User
 import com.kavis.androidtask.databinding.ItemUserBinding
 
-class UserListAdapter(private val listener: UserItemListener) : RecyclerView.Adapter<UserViewHolder>() {
+class UserListAdapter(private val listener: UserItemListener) :
+    PagedListAdapter<User, UserViewHolder>(DIFF_CALLBACK){
 
     interface UserItemListener {
         fun onUserClicked(userId: String)
     }
 
-    private val items = ArrayList<User>()
-
-    fun setItems(items: ArrayList<User>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding: ItemUserBinding = ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return UserViewHolder(binding, listener)
     }
 
-    override fun getItemCount(): Int = items.size
 
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) = holder.bind(items[position])
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int)  {
+        getItem(position)?.let {
+            holder.bind(it)
+        }
+    }
+
+    companion object {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<User> = object: DiffUtil.ItemCallback<User>() {
+            override fun areItemsTheSame(oldItem: User, newItem: User) =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: User, newItem: User) =
+                oldItem == newItem
+        }
+    }
 }
 
 class UserViewHolder(private val itemBinding: ItemUserBinding, private val listener: UserListAdapter.UserItemListener) : RecyclerView.ViewHolder(itemBinding.root),

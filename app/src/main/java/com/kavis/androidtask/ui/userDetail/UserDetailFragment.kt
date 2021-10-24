@@ -44,7 +44,7 @@ class UserDetailFragment: Fragment() {
         viewModel.user.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 NetworkResult.Status.SUCCESS -> {
-                    bindCharacter(it.data!!)
+                    bindUser(it.data!!)
                     binding.progressBar.visibility = View.GONE
                     binding.layoutUser.visibility = View.VISIBLE
                 }
@@ -61,7 +61,7 @@ class UserDetailFragment: Fragment() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun bindCharacter(user: User) {
+    private fun bindUser(user: User) {
         binding.name.text = "${user.title} ${user.firstName} ${user.lastName}"
         binding.tvEmail.text = user.email
         binding.tvGender.text = user.gender

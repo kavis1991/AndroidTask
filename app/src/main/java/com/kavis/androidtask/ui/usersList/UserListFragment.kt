@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kavis.androidtask.R
 import com.kavis.androidtask.USER_ID
 import com.kavis.androidtask.databinding.FragmentUserListBinding
+import com.kavis.androidtask.util.ConnectivityUtil
 import com.kavis.androidtask.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,18 +46,23 @@ class UserListFragment: Fragment(), UserListAdapter.UserItemListener {
     }
 
     private fun setupObservers() {
-        viewModel.getUsers().observe(viewLifecycleOwner, Observer {
-            when (it.status) {
-                NetworkResult.Status.SUCCESS -> {
-                    binding.progressBar.visibility = View.GONE
-                    if (!it.data.isNullOrEmpty()) adapter.setItems(ArrayList(it.data))
-                }
-                NetworkResult.Status.ERROR ->
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
 
-                NetworkResult.Status.LOADING ->
-                    binding.progressBar.visibility = View.VISIBLE
-            }
+        val data = viewModel.getUsers(ConnectivityUtil.isNetworkConnected)
+        data?.networkState?.observe(viewLifecycleOwner, Observer {
+                when (it) {
+                    NetworkResult.Status.SUCCESS -> {
+                        binding.progressBar.visibility = View.GONE
+                    }
+                    NetworkResult.Status.ERROR ->
+                        binding.progressBar.visibility = View.GONE
+
+                    NetworkResult.Status.LOADING ->
+                        binding.progressBar.visibility = View.VISIBLE
+                }
+        })
+
+        data?.pagedList?.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
         })
     }
 
